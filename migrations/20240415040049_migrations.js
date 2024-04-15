@@ -10,23 +10,24 @@ export const up = function (knex) {
             table.string("username", 45).notNullable();
             table.string("email", 255).notNullable();
             table.string("password", 255).notNullable();
+            table.string("img", 45).nullable();
         })
 
-        .createTable("posts", (table) => {
+        .createTable("posts", function (table) {
             table.increments("id").primary();
             table.string("title", 255).notNullable();
             table.string("desc", 1000).notNullable();
             table.string("img", 255).notNullable();
-            table.datetime("date").nullable();
+            table.datetime("date").notNullable();
+            table.integer("uid").unsigned().notNullable();
+            table.string("cat", 45).nullable();
+
+            // Set up the foreign key relationship
             table
-                .integer("uid")
-                .unsigned()
-                .notNullable()
-                .references("id")
-                .inTable("users")
+                .foreign("uid")
+                .references("users.id")
                 .onDelete("CASCADE")
                 .onUpdate("CASCADE");
-            table.string("cat", 45).nullable();
         });
 };
 

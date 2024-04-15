@@ -42,7 +42,6 @@ export const getPost = async (req, res) => {
 };
 
 export const addPost = async (req, res) => {
-    console.log("Add POST");
     const token = req.cookies.access_token;
     if (!token) {
         return res.status(401).json("Not authenticated!");
@@ -52,7 +51,6 @@ export const addPost = async (req, res) => {
         if (err) {
             return res.status(403).json("Token is not valid!");
         }
-        console.log("add to DB");
 
         try {
             const newPost = await db("posts").insert({
